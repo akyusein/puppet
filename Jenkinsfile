@@ -19,7 +19,7 @@ pipeline {
             steps {
                 sh '''
                     echo "Linting Puppet code..."
-                    sh puppet-lint /etc/puppetlabs/code
+                    puppet-lint /etc/puppetlabs/code
                 '''
             }
         }
