@@ -1,17 +1,37 @@
 pipeline {
     agent any
 
+    environment {
+        GEM_HOME = "${WORKSPACE}/.gems"
+        PATH = "${env.GEM_HOME}/bin:${env.PATH}"
+    }
+
     stages {
-        stage('Validate Puppet Syntax') {
+        stage('Install puppet-lint') {
             steps {
-                sh 'find /etc/puppetlabs/code/environments/production/manifests/ -name "*.pp" -exec puppet parser validate {} \\;'
+                sh '''
+                    gem install --no-document puppet-lint
+                '''
             }
         }
 
-        stage('Lint Puppet Code') {
+        stage('Run puppet-lint') {
             steps {
-                sh 'puppet-lint /etc/puppetlabs/code/environments/production/modules/'
+                sh '''
+                    echo "Linting Puppet code..."
+                    puppet-lint --fail-on-warnings manifests/
+                '''
             }
         }
     }
+
+    post {
+        always {
+            echo "Build finished"
+        }
+        failure {
+            echo "Lint failed! Please fix Puppet code style issues."
+        }
+    }
 }
+
