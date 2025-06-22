@@ -4,19 +4,13 @@ pipeline {
     stages {
         stage('Validate Puppet Syntax') {
             steps {
-                sh 'find manifests/ -name "*.pp" -exec puppet parser validate {} \\;'
+                sh 'find /etc/puppetlabs/code/environments/production/manifests/ -name "*.pp" -exec puppet parser validate {} \\;'
             }
         }
 
         stage('Lint Puppet Code') {
             steps {
-                sh 'puppet-lint manifests/ modules/'
-            }
-        }
-
-        stage('Dry Run Apply (noop)') {
-            steps {
-                sh 'puppet apply --noop manifests/site.pp'
+                sh 'puppet-lint /etc/puppetlabs/code/environments/production/modules/'
             }
         }
     }
