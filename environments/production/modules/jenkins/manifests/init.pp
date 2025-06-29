@@ -24,7 +24,7 @@ class jenkins {
     require => [Package['java-11-openjdk'], Exec['import-jenkins-key']],
   }
 
-  
+
   service { 'jenkins':
     ensure     => running,
     enable     => true,
@@ -32,12 +32,12 @@ class jenkins {
     require    => Package['jenkins'],
   }
 
-  
+
   jenkins::config_file { 'main_config':
     source_template => 'jenkins/config.xml.erb',
     path            => '/var/lib/jenkins/config.xml',
     group           => 'jenkins',
-    
+
   }
 
   jenkins::config_file { 'git_hooks_config':
