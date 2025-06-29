@@ -5,14 +5,16 @@ class jenkins {
   }
 
   file { '/etc/yum.repos.d/jenkins.repo':
-    ensure  => file,
-    content => "[jenkins]
-    name=Jenkins
-    baseurl=https://pkg.jenkins.io/redhat-stable/
-    gpgcheck=1
-    gpgkey=https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key",
-    notify  => Exec['import-jenkins-key'],
-  }
+  ensure  => file,
+  content => @("EOF"),
+[jenkins]
+name=Jenkins
+baseurl=https://pkg.jenkins.io/redhat-stable/
+gpgcheck=1
+gpgkey=https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+    | EOF
+  notify  => Exec['import-jenkins-key'],
+}
 
   exec { 'import-jenkins-key':
     command     => '/usr/bin/rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key',
