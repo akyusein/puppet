@@ -7,11 +7,10 @@ class jenkins {
   file { '/etc/yum.repos.d/jenkins.repo':
     ensure  => file,
     content => "[jenkins]
-name=Jenkins
-baseurl=https://pkg.jenkins.io/redhat-stable/
-gpgcheck=1
-gpgkey=https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-",
+    name=Jenkins
+    baseurl=https://pkg.jenkins.io/redhat-stable/
+    gpgcheck=1
+    gpgkey=https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key",
     notify  => Exec['import-jenkins-key'],
   }
 
