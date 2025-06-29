@@ -1,9 +1,37 @@
 class jenkins {
 
+  package { 'java-11-openjdk':
+    ensure => installed,
+  }
+
+  file { '/etc/yum.repos.d/jenkins.repo':
+    ensure  => file,
+    content => "[jenkins]
+name=Jenkins
+baseurl=https://pkg.jenkins.io/redhat-stable/
+gpgcheck=1
+gpgkey=https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+",
+    notify  => Exec['import-jenkins-key'],
+  }
+
+  exec { 'import-jenkins-key':
+    command     => '/usr/bin/rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key',
+    path        => ['/usr/bin'],
+    refreshonly => true,
+  }
+
+  package { 'jenkins':
+    ensure  => installed,
+    require => [Package['java-11-openjdk'], Exec['import-jenkins-key']],
+  }
+
+  
   service { 'jenkins':
     ensure     => running,
     enable     => true,
     hasrestart => true,
+    require    => Package['jenkins'],
   }
 
   
@@ -18,5 +46,3 @@ class jenkins {
     path            => '/var/lib/jenkins/jenkins.plugins.git.GitHooksConfiguration.xml',
   }
 }
-
-
