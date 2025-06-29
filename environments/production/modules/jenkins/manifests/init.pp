@@ -1,20 +1,22 @@
-class jenkins (
-  String $config_file_path = '/var/lib/jenkins/config.xml',
-) {
-
-  file { $config_file_path:
-    ensure  => file,
-    content => template('jenkins/config.xml.erb'),
-    owner   => 'jenkins',
-    group   => 'jenkins',
-    mode    => '0644',
-    notify  => Service['jenkins'],
-  }
+class jenkins {
 
   service { 'jenkins':
     ensure     => running,
     enable     => true,
     hasrestart => true,
   }
+
+  
+  jenkins::config_file { 'main_config':
+    source_template => 'jenkins/config.xml.erb',
+    path            => '/var/lib/jenkins/config.xml',
+    
+  }
+
+  jenkins::config_file { 'git_hooks_config':
+    source_template => 'jenkins/plugins_git_hooks.erb',
+    path            => '/var/lib/jenkins/jenkins.plugins.git.GitHooksConfiguration.xml',
+  }
 }
+
 
