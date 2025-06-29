@@ -4,20 +4,13 @@ class jenkins {
     ensure => installed,
   }
 
-  ffile { '/etc/yum.repos.d/jenkins.repo':
-  ensure  => file,
-  content => @(REPO),
-[jenkins]
-name=Jenkins
-baseurl=https://pkg.jenkins.io/redhat-stable/
-gpgcheck=1
-gpgkey=https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-enabled=1
-  | REPO
-  owner   => 'root',
-  group   => 'root',
-  mode    => '0644',
-  notify  => Exec['import-jenkins-key'],
+  file { '/etc/yum.repos.d/jenkins.repo':
+    ensure  => file,
+    content => template('jenkins/jenkins.repo.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    notify  => Exec['import-jenkins-key'],
 }
 
   exec { 'import-jenkins-key':
