@@ -38,6 +38,7 @@ gpgkey=https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
   jenkins::config_file { 'main_config':
     source_template => 'jenkins/config.xml.erb',
     path            => '/var/lib/jenkins/config.xml',
+    group           => 'jenkins',
     
   }
 
