@@ -10,13 +10,13 @@ class jenkins {
 name=Jenkins
 baseurl=https://pkg.jenkins.io/redhat-stable/
 gpgcheck=1
-gpgkey=https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+gpgkey=https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 ",
     notify  => Exec['import-jenkins-key'],
   }
 
   exec { 'import-jenkins-key':
-    command     => '/usr/bin/rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key',
+    command     => '/usr/bin/rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key',
     path        => ['/usr/bin'],
     refreshonly => true,
   }
