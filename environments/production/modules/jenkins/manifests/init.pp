@@ -44,4 +44,10 @@ class jenkins {
     source_template => 'jenkins/plugins_git_hooks.erb',
     path            => '/var/lib/jenkins/jenkins.plugins.git.GitHooksConfiguration.xml',
   }
+
+  jenkins::config_file { 'hudson_triggers':
+    source_template => 'jenkins/hudson.triggers.SCMTrigger.xml.erb',
+    path            => '/var/lib/jenkins/hudson.triggers.SCMTrigger.xml',
+  }
+
 }

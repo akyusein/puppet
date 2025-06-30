@@ -5,6 +5,7 @@ define jenkins::config_file (
   String $group = 'jenkins',
   String $mode  = '0644',
 ) {
+  
   file { $path:
     ensure  => file,
     content => template($source_template),
