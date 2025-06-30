@@ -41,7 +41,7 @@ class jenkins {
   }
 
   jenkins::config_file { 'git_hooks_config':
-    source_template => 'jenkins/plugins_git_hooks.erb',
+    source_template => 'jenkins/jenkins.plugins.git.GitHooksConfiguration.xml.erb',
     path            => '/var/lib/jenkins/jenkins.plugins.git.GitHooksConfiguration.xml',
   }
 
