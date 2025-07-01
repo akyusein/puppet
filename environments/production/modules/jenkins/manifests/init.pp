@@ -1,6 +1,6 @@
 class jenkins {
 
-  package { 'java-11-openjdk':
+  package { 'java-17-openjdk':
     ensure => installed,
   }
 
@@ -21,7 +21,7 @@ class jenkins {
 
   package { 'jenkins':
     ensure  => installed,
-    require => [Package['java-11-openjdk'], Exec['import-jenkins-key']],
+    require => [Package['java-17-openjdk'], Exec['import-jenkins-key']],
   }
 
 
