@@ -8,8 +8,15 @@ defaults:
   # datadir: data
   # data_hash: yaml_data
 hierarchy:
-  - name: "Per-node data (yaml version)"
-    path: "nodes/%{::trusted.certname}.yaml"
-  - name: "Other YAML hierarchy levels"
-    paths:
-      - "common.yaml"
+  - name: "Hiera-vault lookup"
+    lookup_key: vault_lookup_key
+    options:
+      confine_to_keys:
+        - '^ssh'
+      address: https://localhost:8200
+      auth:
+        token_file: /etc/puppetlabs/puppet/vault_token
+      default_field: value
+      mounts:
+        generic:
+          - secret/puppet/%{::trusted.certname}/
