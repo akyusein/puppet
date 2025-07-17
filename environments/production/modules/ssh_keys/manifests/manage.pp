@@ -1,8 +1,8 @@
 class ssh_keys::manage {
 
-  $user = akselyusein
+  $user = 'akselyusein'
 
-  $user_key = lookup('vault::secret::ssh-keys::akselyusein::public_key')
+  $user_key = lookup('ssh::akselyusein::public_key')
 
   user { $user:
     ensure => present,
