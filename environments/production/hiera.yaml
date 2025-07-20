@@ -13,9 +13,13 @@ hierarchy:
     options:
       confine_to_keys:
         - '^ssh'
-      address: https://localhost:8200
+      address: http://192.168.1.83:8200
       auth:
-        token_file: /etc/puppetlabs/puppet/vault_token
+        type: approle
+        role_id_file: /etc/puppetlabs/puppet/vault/role_id
+        secret_id_file: /etc/puppetlabs/puppet/vault/secret_id
+      mount: secret
+      ssl_verify: false
       default_field: value
       mounts:
         generic:
