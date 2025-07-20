@@ -9,11 +9,11 @@ defaults:
   # data_hash: yaml_data
 hierarchy:
   - name: "Hiera-vault lookup"
-    lookup_key: vault_lookup_key
+    lookup_key: hiera_vault
     options:
       confine_to_keys:
         - '^ssh'
-      address: http://192.168.1.83:8200
+      address: http://localhost:8200
       auth:
         type: approle
         role_id_file: /etc/puppetlabs/puppet/vault/role_id
@@ -23,4 +23,4 @@ hierarchy:
       default_field: value
       mounts:
         generic:
-          - secret/puppet/%{::trusted.certname}/
+          - kv/puppet/%{::trusted.certname}/

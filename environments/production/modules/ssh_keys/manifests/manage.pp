@@ -2,7 +2,7 @@ class ssh_keys::manage {
 
   $user = 'akselyusein'
 
-  $user_key = lookup('ssh::akselyusein::public_key')
+  $user_key = lookup('name' => 'ssh_pub')
 
   user { $user:
     ensure => present,
