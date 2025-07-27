@@ -2,15 +2,13 @@ class ssh_keys::manage {
 
   $user = 'akselyusein'
 
-  $user_key = lookup('name' => 'ssh_pub')
+  $user_key = lookup('name' => 'vault_notify')
 
   user { $user:
     ensure => present,
     home   => "/home/${user}",
     shell  => '/bin/bash',
     managehome => true,
-    group => ['wheel'],
-    append => true,
   }
 
   file { "/home/${user}/.ssh":

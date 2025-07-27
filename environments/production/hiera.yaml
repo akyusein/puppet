@@ -1,26 +1,19 @@
 ---
 version: 5
+
 defaults:
-  # The default value for "datadir" is "data" under the same directory as the hiera.yaml
-  # file (this file)
-  # When specifying a datadir, make sure the directory exists.
-  # See https://puppet.com/docs/puppet/latest/environments_about.html for further details on environments.
-  # datadir: data
-  # data_hash: yaml_data
+  datadir: data
+  data_hash: yaml_data
+
 hierarchy:
   - name: "Hiera-vault lookup"
     lookup_key: hiera_vault
     options:
-      confine_to_keys:
-        - '^ssh'
-      address: http://localhost:8200
-      auth:
-        type: approle
-        role_id_file: /etc/puppetlabs/puppet/vault/role_id
-        secret_id_file: /etc/puppetlabs/puppet/vault/secret_id
-      mount: secret
+      token: #insert token here
+      address: http://puppet:8200
+      v2_guess_mount: true
+      v1_lookup: false
       ssl_verify: false
-      default_field: value
       mounts:
-        generic:
-          - kv/puppet/%{::trusted.certname}/
+        keys:
+          - puppet/%{::trusted.certname}
