@@ -2,7 +2,7 @@ class ssh_keys::manage {
 
   $user = 'akselyusein'
 
-  $user_key = lookup('name' => 'vault_notify')
+  $user_key = lookup('vault_notify')['ssh_pub']
 
   user { $user:
     ensure => present,
