@@ -1,4 +1,5 @@
 ---
+
 version: 5
 
 defaults:
@@ -9,7 +10,7 @@ hierarchy:
   - name: "Hiera-vault lookup"
     lookup_key: hiera_vault
     options:
-      token: #insert token here
+      token: /etc/puppetlabs/puppet/token
       address: http://puppet:8200
       v2_guess_mount: true
       v1_lookup: false
