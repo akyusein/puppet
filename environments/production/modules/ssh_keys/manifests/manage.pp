@@ -1,6 +1,6 @@
 class ssh_keys::manage {
 
-  $user = 'akselyusein'
+  $user = 'ayusi
 
   $user_key = lookup('vault_notify')['ssh_pub']
 
@@ -26,5 +26,3 @@ class ssh_keys::manage {
     content => "${user_key}\n",
   }
 }
-
-
